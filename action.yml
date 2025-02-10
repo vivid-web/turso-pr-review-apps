@@ -1,0 +1,33 @@
+name: "Turso PR Review Apps"
+
+description: "Spin up a new Turso database in a review environment"
+
+author: "Vivid Web"
+
+branding:
+  color: "green"
+  icon: "database"
+
+inputs:
+  organization_name:
+    description: "The name of the organization or account where this action will be performed."
+    required: true
+  api_token:
+    description: "The API key that has access to the organization or account."
+    required: true
+  existing_database_name:
+    description: "The name of the existing database."
+    required: true
+  new_database_name:
+    description: "The new database name."
+    required: true
+
+outputs:
+  hostname:
+    description: "The database hostname without protocol."
+  token:
+    description: "The database token."
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
