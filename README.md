@@ -23,8 +23,7 @@ jobs:
       - name: Create Database
         uses: vivid-web/turso-pr-review-apps@v0.0.1
         with:
-          organization_name: ${{ secrets.TURSO_ORGANIZATION_NAME }}
+          organization: ${{ secrets.TURSO_ORGANIZATION_NAME }}
           api_token: ${{ secrets.TURSO_API_TOKEN }}
-          existing_database_name: ${{ secrets.TURSO_DATABASE_NAME }}
-          new_database_name: ${{ env.NEW_DATABASE_NAME }}
+          db_name: ${{ env.TURSO_DATABASE_NAME }}
 ```

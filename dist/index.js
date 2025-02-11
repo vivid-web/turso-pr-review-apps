@@ -26228,28 +26228,25 @@ __nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 
 
 async function run() {
-    const apiToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("api_token");
-    const org = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("organization_name");
-    const existingDbName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("existing_database_name");
-    const newDbName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("new_database_name");
-    const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token: apiToken });
-    const { group } = await turso.databases.get(existingDbName);
-    if (!group) {
-        throw new Error("Database does not belong to a group");
-    }
-    const database = await turso.databases.create(newDbName, {
-        group,
-        seed: {
-            type: "database",
-            name: existingDbName,
-        },
+    const org = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("organization");
+    const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("api_token");
+    const dbName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_name");
+    const dbGroup = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_group") || "default";
+    const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token });
+    // Remove the database before creating a new one with the same name
+    await turso.databases.delete(dbName).catch((error) => {
+        if (error.status === 404) {
+            return;
+        }
+        throw error;
     });
-    const token = await turso.databases.createToken(newDbName, {
+    const database = await turso.databases.create(dbName, { group: dbGroup });
+    const dbToken = await turso.databases.createToken(dbName, {
         authorization: "full-access",
     });
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("hostname", database.hostname);
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("token", token.jwt);
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret(token.jwt);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("token", dbToken.jwt);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret(dbToken.jwt);
 }
 try {
     await run();

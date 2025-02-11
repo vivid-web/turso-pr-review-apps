@@ -1,35 +1,32 @@
 import * as core from "@actions/core";
-import { createClient } from "@tursodatabase/api";
+import { createClient, type TursoClientError } from "@tursodatabase/api";
 
 async function run() {
-	const apiToken = core.getInput("api_token");
-	const org = core.getInput("organization_name");
-	const existingDbName = core.getInput("existing_database_name");
-	const newDbName = core.getInput("new_database_name");
+	const org = core.getInput("organization");
+	const token = core.getInput("api_token");
+	const dbName = core.getInput("db_name");
+	const dbGroup = core.getInput("db_group") || "default";
 
-	const turso = createClient({ org, token: apiToken });
+	const turso = createClient({ org, token });
 
-	const { group } = await turso.databases.get(existingDbName);
+	// Remove the database before creating a new one with the same name
+	await turso.databases.delete(dbName).catch((error: TursoClientError) => {
+		if (error.status === 404) {
+			return;
+		}
 
-	if (!group) {
-		throw new Error("Database does not belong to a group");
-	}
-
-	const database = await turso.databases.create(newDbName, {
-		group,
-		seed: {
-			type: "database",
-			name: existingDbName,
-		},
+		throw error;
 	});
 
-	const token = await turso.databases.createToken(newDbName, {
+	const database = await turso.databases.create(dbName, { group: dbGroup });
+
+	const dbToken = await turso.databases.createToken(dbName, {
 		authorization: "full-access",
 	});
 
 	core.setOutput("hostname", database.hostname);
-	core.setOutput("token", token.jwt);
-	core.setSecret(token.jwt);
+	core.setOutput("token", dbToken.jwt);
+	core.setSecret(dbToken.jwt);
 }
 
 try {
