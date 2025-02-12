@@ -22,12 +22,6 @@ inputs:
     description: "The group of the database."
     required: false
 
-outputs:
-  hostname:
-    description: "The database hostname without protocol."
-  token:
-    description: "The database token."
-
 runs:
   using: "node20"
   main: "dist/index.js"
