@@ -10,6 +10,8 @@ async function run() {
 
 	const turso = createClient({ org, token });
 
+	core.info(`Creating database ${dbName} in group ${group}`);
+
 	// Remove the database before creating a new one with the same name
 	await turso.databases.delete(dbName).catch((error: TursoClientError) => {
 		if (error.status === 404) {
@@ -28,6 +30,8 @@ async function run() {
 	core.setOutput("hostname", database.hostname);
 	core.setOutput("token", dbToken.jwt);
 	core.setSecret(dbToken.jwt);
+
+	core.info(`Database ${dbName} created with hostname ${database.hostname}`);
 }
 
 try {

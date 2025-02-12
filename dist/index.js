@@ -26234,6 +26234,7 @@ async function run() {
     const dbGroupInput = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_group", { required: false });
     const group = dbGroupInput ? dbGroupInput : "default";
     const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token });
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Creating database ${dbName} in group ${group}`);
     // Remove the database before creating a new one with the same name
     await turso.databases.delete(dbName).catch((error) => {
         if (error.status === 404) {
@@ -26248,6 +26249,7 @@ async function run() {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("hostname", database.hostname);
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("token", dbToken.jwt);
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret(dbToken.jwt);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Database ${dbName} created with hostname ${database.hostname}`);
 }
 try {
     await run();
