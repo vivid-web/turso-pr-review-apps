@@ -12,17 +12,22 @@ async function run() {
 
 	core.info(`Creating database ${dbName} in group ${group}`);
 
+	core.debug("Deleting database if it already exists");
 	// Remove the database before creating a new one with the same name
 	await turso.databases.delete(dbName).catch((error: TursoClientError) => {
 		if (error.status === 404) {
 			return;
 		}
 
+		core.debug("Failed to delete database");
+
 		throw error;
 	});
 
+	core.debug("Creating new database");
 	const database = await turso.databases.create(dbName, { group });
 
+	core.debug("Creating token for the database");
 	const dbToken = await turso.databases.createToken(dbName, {
 		authorization: "full-access",
 	});
