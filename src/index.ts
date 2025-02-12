@@ -14,15 +14,21 @@ async function run() {
 
 	core.debug("Deleting database if it already exists");
 	// Remove the database before creating a new one with the same name
-	await turso.databases.delete(dbName).catch((error: TursoClientError) => {
-		if (error.status === 404) {
-			return;
+
+	try {
+		await turso.databases.delete(dbName);
+		// @ts-expect-error TursoClientError is not exported as an error-type
+	} catch (error: TursoClientError) {
+		core.debug("An error occurred while deleting the database");
+		core.debug(`Error status: ${error.status}`);
+		core.debug(`Error message: ${error.message}`);
+
+		if (error.status !== 404) {
+			core.debug("Failed to delete database");
+
+			throw error;
 		}
-
-		core.debug("Failed to delete database");
-
-		throw error;
-	});
+	}
 
 	core.debug("Creating new database");
 	const database = await turso.databases.create(dbName, { group });
