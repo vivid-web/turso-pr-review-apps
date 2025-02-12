@@ -26235,20 +26235,25 @@ async function run() {
     const group = dbGroupInput ? dbGroupInput : "default";
     const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token });
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Creating database ${dbName} in group ${group}`);
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Deleting database if it already exists");
     // Remove the database before creating a new one with the same name
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Deleting database if it already exists");
     try {
         await turso.databases.delete(dbName);
         // @ts-expect-error TursoClientError is not exported as an error-type
     }
     catch (error) {
+        if (error.status === 404) {
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Database not found, skipping deletion");
+            return;
+        }
+        if (error.status === 401) {
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.error("Unauthorized to set up the database");
+            throw error;
+        }
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("An error occurred while deleting the database");
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`Error status: ${error.status}`);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`Error message: ${error.message}`);
-        if (error.status !== 404) {
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Failed to delete database");
-            throw error;
-        }
+        throw error;
     }
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Creating new database");
     const database = await turso.databases.create(dbName, { group });

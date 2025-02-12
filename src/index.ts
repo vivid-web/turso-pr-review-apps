@@ -12,22 +12,30 @@ async function run() {
 
 	core.info(`Creating database ${dbName} in group ${group}`);
 
-	core.debug("Deleting database if it already exists");
 	// Remove the database before creating a new one with the same name
+	core.debug("Deleting database if it already exists");
 
 	try {
 		await turso.databases.delete(dbName);
 		// @ts-expect-error TursoClientError is not exported as an error-type
 	} catch (error: TursoClientError) {
+		if (error.status === 404) {
+			core.debug("Database not found, skipping deletion");
+
+			return;
+		}
+
+		if (error.status === 401) {
+			core.error("Unauthorized to set up the database");
+
+			throw error;
+		}
+
 		core.debug("An error occurred while deleting the database");
 		core.debug(`Error status: ${error.status}`);
 		core.debug(`Error message: ${error.message}`);
 
-		if (error.status !== 404) {
-			core.debug("Failed to delete database");
-
-			throw error;
-		}
+		throw error;
 	}
 
 	core.debug("Creating new database");
