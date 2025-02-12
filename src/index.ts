@@ -2,10 +2,11 @@ import * as core from "@actions/core";
 import { createClient, type TursoClientError } from "@tursodatabase/api";
 
 async function run() {
-	const org = core.getInput("organization");
-	const token = core.getInput("api_token");
-	const dbName = core.getInput("db_name");
-	const dbGroup = core.getInput("db_group") || "default";
+	const org = core.getInput("organization", { required: true });
+	const token = core.getInput("api_token", { required: true });
+	const dbName = core.getInput("db_name", { required: true });
+	const dbGroupInput = core.getInput("db_group", { required: false });
+	const group = dbGroupInput ? dbGroupInput : "default";
 
 	const turso = createClient({ org, token });
 
@@ -18,7 +19,7 @@ async function run() {
 		throw error;
 	});
 
-	const database = await turso.databases.create(dbName, { group: dbGroup });
+	const database = await turso.databases.create(dbName, { group });
 
 	const dbToken = await turso.databases.createToken(dbName, {
 		authorization: "full-access",

@@ -26228,10 +26228,11 @@ __nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 
 
 async function run() {
-    const org = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("organization");
-    const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("api_token");
-    const dbName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_name");
-    const dbGroup = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_group") || "default";
+    const org = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("organization", { required: true });
+    const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("api_token", { required: true });
+    const dbName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_name", { required: true });
+    const dbGroupInput = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("db_group", { required: false });
+    const group = dbGroupInput ? dbGroupInput : "default";
     const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token });
     // Remove the database before creating a new one with the same name
     await turso.databases.delete(dbName).catch((error) => {
@@ -26240,7 +26241,7 @@ async function run() {
         }
         throw error;
     });
-    const database = await turso.databases.create(dbName, { group: dbGroup });
+    const database = await turso.databases.create(dbName, { group });
     const dbToken = await turso.databases.createToken(dbName, {
         authorization: "full-access",
     });
