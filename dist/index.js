@@ -26261,8 +26261,8 @@ async function run() {
     const dbToken = await turso.databases.createToken(dbName, {
         authorization: "full-access",
     });
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.exportVariable("TURSO_DATABASE_URL", database.hostname);
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.exportVariable("TURSO_AUTH_TOKEN", dbToken.jwt);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("hostname", database.hostname);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("token", dbToken.jwt);
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret(dbToken.jwt);
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Database ${dbName} created with hostname ${database.hostname}`);
 }

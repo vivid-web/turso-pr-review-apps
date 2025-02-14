@@ -46,8 +46,8 @@ async function run() {
 		authorization: "full-access",
 	});
 
-	core.exportVariable("TURSO_DATABASE_URL", database.hostname);
-	core.exportVariable("TURSO_AUTH_TOKEN", dbToken.jwt);
+	core.setOutput("hostname", database.hostname);
+	core.setOutput("token", dbToken.jwt);
 	core.setSecret(dbToken.jwt);
 
 	core.info(`Database ${dbName} created with hostname ${database.hostname}`);
