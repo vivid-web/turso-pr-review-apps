@@ -26227,6 +26227,9 @@ __nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(5906);
 
 
+const filterByName = (dbName) => (database) => {
+    return database.name === dbName;
+};
 async function run() {
     const org = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("organization", { required: true });
     const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("api_token", { required: true });
@@ -26236,24 +26239,14 @@ async function run() {
     const turso = (0,_tursodatabase_api__WEBPACK_IMPORTED_MODULE_1__/* .createClient */ .U)({ org, token });
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Creating database ${dbName} in group ${group}`);
     // Remove the database before creating a new one with the same name
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Deleting database if it already exists");
-    try {
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Listing all databases");
+    const allDatabases = await turso.databases.list({ group });
+    if (allDatabases.some(filterByName(dbName))) {
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Database already exists, deleting it");
         await turso.databases.delete(dbName);
-        // @ts-expect-error TursoClientError is not exported as an error-type
     }
-    catch (error) {
-        if (error.status === 404) {
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Database not found, skipping deletion");
-            return;
-        }
-        if (error.status === 401) {
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.error("Unauthorized to set up the database");
-            throw error;
-        }
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("An error occurred while deleting the database");
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`Error status: ${error.status}`);
-        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`Error message: ${error.message}`);
-        throw error;
+    else {
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Database does not exist. Nothing to delete");
     }
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug("Creating new database");
     const database = await turso.databases.create(dbName, { group });

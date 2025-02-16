@@ -1,5 +1,9 @@
 import * as core from "@actions/core";
-import { createClient, type TursoClientError } from "@tursodatabase/api";
+import { createClient, type Database } from "@tursodatabase/api";
+
+const filterByName = (dbName: string) => (database: Database) => {
+	return database.name === dbName;
+};
 
 async function run() {
 	const org = core.getInput("organization", { required: true });
@@ -13,29 +17,14 @@ async function run() {
 	core.info(`Creating database ${dbName} in group ${group}`);
 
 	// Remove the database before creating a new one with the same name
-	core.debug("Deleting database if it already exists");
+	core.debug("Listing all databases");
+	const allDatabases = await turso.databases.list({ group });
 
-	try {
+	if (allDatabases.some(filterByName(dbName))) {
+		core.debug("Database already exists, deleting it");
 		await turso.databases.delete(dbName);
-		// @ts-expect-error TursoClientError is not exported as an error-type
-	} catch (error: TursoClientError) {
-		if (error.status === 404) {
-			core.debug("Database not found, skipping deletion");
-
-			return;
-		}
-
-		if (error.status === 401) {
-			core.error("Unauthorized to set up the database");
-
-			throw error;
-		}
-
-		core.debug("An error occurred while deleting the database");
-		core.debug(`Error status: ${error.status}`);
-		core.debug(`Error message: ${error.message}`);
-
-		throw error;
+	} else {
+		core.debug("Database does not exist. Nothing to delete");
 	}
 
 	core.debug("Creating new database");
