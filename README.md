@@ -13,7 +13,9 @@ Add the following to your workflow:
 
 ```yaml
 name: Create Database for Branch
-on: create
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
 
 jobs:
   create_database:
