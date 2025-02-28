@@ -19,7 +19,8 @@
 	"license": "ISC",
 	"dependencies": {
 		"@actions/core": "^1.11.1",
-		"@actions/github": "^6.0.0"
+		"@actions/github": "^6.0.0",
+		"zod": "^3.24.2"
 	},
 	"devDependencies": {
 		"@tursodatabase/api": "^1.9.0",

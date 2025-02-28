@@ -1,45 +1,42 @@
 import * as core from "@actions/core";
-import { createClient, type Database } from "@tursodatabase/api";
+import { createClient } from "@tursodatabase/api";
 
-const filterByName = (dbName: string) => (database: Database) => {
-	return database.name === dbName;
-};
+import { onClosed } from "./hooks/on-closed.js";
+import { onOpened } from "./hooks/on-opened.js";
+import { getEventInformation } from "./utils.js";
 
 async function run() {
+	const response = await getEventInformation();
+
 	const org = core.getInput("organization", { required: true });
 	const token = core.getInput("api_token", { required: true });
-	const dbName = core.getInput("db_name", { required: true });
-	const dbGroupInput = core.getInput("db_group", { required: false });
-	const group = dbGroupInput ? dbGroupInput : "default";
+	const tursoClient = createClient({ org, token });
 
-	const turso = createClient({ org, token });
+	if (!response.success) {
+		core.warning("No pull request number found. Skipping Turso GitHub Action");
 
-	core.info(`Creating database ${dbName} in group ${group}`);
-
-	// Remove the database before creating a new one with the same name
-	core.debug("Listing all databases");
-	const allDatabases = await turso.databases.list({ group });
-
-	if (allDatabases.some(filterByName(dbName))) {
-		core.debug("Database already exists, deleting it");
-		await turso.databases.delete(dbName);
-	} else {
-		core.debug("Database does not exist. Nothing to delete");
+		return;
 	}
 
-	core.debug("Creating new database");
-	const database = await turso.databases.create(dbName, { group });
+	const { action } = response.data;
 
-	core.debug("Creating token for the database");
-	const dbToken = await turso.databases.createToken(dbName, {
-		authorization: "full-access",
-	});
+	if (action === "closed") {
+		core.debug(`Handling ${action} action`);
+		await onClosed(tursoClient);
 
-	core.setOutput("hostname", database.hostname);
-	core.setOutput("token", dbToken.jwt);
-	core.setSecret(dbToken.jwt);
+		return;
+	}
 
-	core.info(`Database ${dbName} created with hostname ${database.hostname}`);
+	if (action === "opened" || action === "reopened") {
+		core.debug(`Handling ${action} action`);
+		await onOpened(tursoClient);
+
+		return;
+	}
+
+	core.warning(
+		`Unsupported pull request ${action} action . Skipping Turso GitHub Action`,
+	);
 }
 
 try {
