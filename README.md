@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Database
-        uses: vivid-web/turso-pr-review-apps@v0.0.7
+        uses: vivid-web/turso-pr-review-apps@v0.0.8
         with:
           organization: ${{ secrets.TURSO_ORGANIZATION_NAME }}
           api_token: ${{ secrets.TURSO_API_TOKEN }}
