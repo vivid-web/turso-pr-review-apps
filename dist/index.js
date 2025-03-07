@@ -26327,7 +26327,7 @@ async function run() {
         await (0,_hooks_on_opened_js__WEBPACK_IMPORTED_MODULE_3__/* .onOpened */ .T)(tursoClient);
         return;
     }
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.warning(`Unsupported pull request ${action} action . Skipping Turso GitHub Action`);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.warning(`Unsupported pull request ${action} action. Skipping Turso GitHub Action`);
 }
 try {
     await run();

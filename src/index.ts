@@ -39,7 +39,7 @@ async function run() {
 	}
 
 	core.warning(
-		`Unsupported pull request ${action} action . Skipping Turso GitHub Action`,
+		`Unsupported pull request ${action} action. Skipping Turso GitHub Action`,
 	);
 }
 
