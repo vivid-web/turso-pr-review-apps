@@ -5,6 +5,7 @@ export const EventSchema = z.object({
 		z.literal("closed"),
 		z.literal("opened"),
 		z.literal("reopened"),
+		z.literal("synchronize"),
 		z.string(),
 	]),
 });

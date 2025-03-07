@@ -26320,7 +26320,9 @@ async function run() {
         await (0,_hooks_on_closed_js__WEBPACK_IMPORTED_MODULE_2__/* .onClosed */ .E)(tursoClient);
         return;
     }
-    if (action === "opened" || action === "reopened") {
+    if (action === "opened" ||
+        action === "reopened" ||
+        action === "synchronize") {
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`Handling ${action} action`);
         await (0,_hooks_on_opened_js__WEBPACK_IMPORTED_MODULE_3__/* .onOpened */ .T)(tursoClient);
         return;
@@ -30771,6 +30773,7 @@ const EventSchema = z.object({
         z.literal("closed"),
         z.literal("opened"),
         z.literal("reopened"),
+        z.literal("synchronize"),
         z.string(),
     ]),
 });

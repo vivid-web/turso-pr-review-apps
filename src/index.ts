@@ -27,7 +27,11 @@ async function run() {
 		return;
 	}
 
-	if (action === "opened" || action === "reopened") {
+	if (
+		action === "opened" ||
+		action === "reopened" ||
+		action === "synchronize"
+	) {
 		core.debug(`Handling ${action} action`);
 		await onOpened(tursoClient);
 
