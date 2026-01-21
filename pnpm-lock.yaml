@@ -34,8 +34,8 @@ importers:
         specifier: ^16.1.2
         version: 16.1.2
       prettier:
-        specifier: ^3.5.3
-        version: 3.5.3
+        specifier: ^3.8.1
+        version: 3.8.1
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -218,8 +218,8 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
-  prettier@3.5.3:
-    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+  prettier@3.8.1:
+    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -461,7 +461,7 @@ snapshots:
 
   pidtree@0.6.0: {}
 
-  prettier@3.5.3: {}
+  prettier@3.8.1: {}
 
   restore-cursor@5.1.0:
     dependencies:
