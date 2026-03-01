@@ -23,7 +23,7 @@
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
-		"@types/node": "^22.19.11",
+		"@types/node": "^24.11.0",
 		"@vercel/ncc": "^0.38.4",
 		"dotenv-cli": "^8.0.0",
 		"husky": "^9.1.7",
