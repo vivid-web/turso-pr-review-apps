@@ -19,11 +19,11 @@ importers:
         version: 3.25.76
     devDependencies:
       '@types/node':
-        specifier: ^22.19.20
-        version: 22.19.20
+        specifier: ^22.19.21
+        version: 22.19.21
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       dotenv-cli:
         specifier: ^8.0.0
         version: 8.0.0
@@ -34,8 +34,8 @@ importers:
         specifier: ^16.4.0
         version: 16.4.0
       prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
+        specifier: ^3.8.4
+        version: 3.8.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -61,11 +61,11 @@ packages:
   '@tursodatabase/api@1.9.2':
     resolution: {integrity: sha512-CPu4o9m9pCpztgAZm17dMbmLuEJR2HOkBHvGjjt+40C+w3ncoxnZTJsv9gxv47OQhilSjXH1ck/xEMIZpXzRxA==}
 
-  '@types/node@22.19.20':
-    resolution: {integrity: sha512-6tELRwSDYWW9EdZhbeZmYGZ1/7Djkt+Ah3/ScEYT9cDord7UJzasR/4D3VONg9tQI5CDp+/CZC1AXj2pCFOvpw==}
+  '@types/node@22.19.21':
+    resolution: {integrity: sha512-VMeFBSCKQKmm2swI2kW51SFusDqekC6q9trBCvJ/JliDchFSuoYYKN7yVNjPthP1HKZcx3U1gI/wTcEBjEFKTA==}
 
-  '@vercel/ncc@0.38.4':
-    resolution: {integrity: sha512-8LwjnlP39s08C08J5NstzriPvW1SP8Zfpp1BvC2sI35kPeZnHfxVkCwu4/+Wodgnd60UtT1n8K8zw+Mp7J9JmQ==}
+  '@vercel/ncc@0.44.0':
+    resolution: {integrity: sha512-pHyI+bZokSgIscTKFSmpNk5vZzmOrb9RW0Vu4SRyqUvkJ0kgg3PzaZLLDVTFXhbUiCqg0/Eu8L4fKtgViA92kg==}
     hasBin: true
 
   ansi-escapes@7.3.0:
@@ -169,8 +169,8 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.8.4:
+    resolution: {integrity: sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -281,11 +281,11 @@ snapshots:
     dependencies:
       whatwg-fetch: 3.6.20
 
-  '@types/node@22.19.20':
+  '@types/node@22.19.21':
     dependencies:
       undici-types: 6.21.0
 
-  '@vercel/ncc@0.38.4': {}
+  '@vercel/ncc@0.44.0': {}
 
   ansi-escapes@7.3.0:
     dependencies:
@@ -379,7 +379,7 @@ snapshots:
 
   picomatch@4.0.4: {}
 
-  prettier@3.8.3: {}
+  prettier@3.8.4: {}
 
   restore-cursor@5.1.0:
     dependencies:
