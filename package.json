@@ -23,13 +23,13 @@
 		"zod": "^3.25.76"
 	},
 	"devDependencies": {
-		"@types/node": "^22.19.20",
-		"@vercel/ncc": "^0.38.4",
+		"@types/node": "^22.19.21",
+		"@vercel/ncc": "^0.44.0",
 		"dotenv-cli": "^8.0.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.4.0",
-		"prettier": "^3.8.3",
+		"prettier": "^3.8.4",
 		"typescript": "^5.9.3"
 	},
-	"packageManager": "pnpm@10.34.1"
+	"packageManager": "pnpm@10.34.3"
 }
