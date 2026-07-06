@@ -22,7 +22,7 @@ importers:
         specifier: ^22.20.0
         version: 22.20.0
       '@vercel/ncc':
-        specifier: ^0.44.0
+        specifier: ^0.44.1
         version: 0.44.1
       dotenv-cli:
         specifier: ^8.0.0
@@ -34,7 +34,7 @@ importers:
         specifier: ^16.4.0
         version: 16.4.0
       prettier:
-        specifier: ^3.9.1
+        specifier: ^3.9.4
         version: 3.9.4
       typescript:
         specifier: ^5.9.3
