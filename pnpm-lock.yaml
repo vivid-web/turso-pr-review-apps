@@ -19,8 +19,8 @@ importers:
         version: 3.25.76
     devDependencies:
       '@types/node':
-        specifier: ^22.20.4
-        version: 22.20.4
+        specifier: ^22.20.5
+        version: 22.20.5
       '@vercel/ncc':
         specifier: ^0.45.0
         version: 0.45.0
@@ -61,8 +61,8 @@ packages:
   '@tursodatabase/api@1.9.2':
     resolution: {integrity: sha512-CPu4o9m9pCpztgAZm17dMbmLuEJR2HOkBHvGjjt+40C+w3ncoxnZTJsv9gxv47OQhilSjXH1ck/xEMIZpXzRxA==}
 
-  '@types/node@22.20.4':
-    resolution: {integrity: sha512-zJRE40jpHtKqE/C4fgHrAKQLJuSpzEnP9ff9Y7YtoR3Wd2pwqzlekDeEuUQXjRd+QCYnVnNwuJYmhdk9XV8gvA==}
+  '@types/node@22.20.5':
+    resolution: {integrity: sha512-U2+DNr+wSjpsTS/wZGYHq7GcwfuSmKiKvoPvK22zwTlRhU91yOniN4qRR5KhIjvif7ysw/dz/hKmfDH0Ris4aA==}
 
   '@vercel/ncc@0.45.0':
     resolution: {integrity: sha512-8zPi1yO2mHpoKTD+e+Bf0ZT3e+sWHSOyGapm9s7b5R0gxJi3CiFTqmeQiMEyu6ejrz2s09M8JkEoUaTWjBJPQQ==}
@@ -281,7 +281,7 @@ snapshots:
     dependencies:
       whatwg-fetch: 3.6.20
 
-  '@types/node@22.20.4':
+  '@types/node@22.20.5':
     dependencies:
       undici-types: 6.21.0
 
